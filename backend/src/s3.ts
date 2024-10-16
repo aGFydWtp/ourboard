@@ -1,7 +1,7 @@
 import * as AWS from "aws-sdk"
 
 const s3Config = {
-    region: "eu-north-1",
+    region: process.env.AWS_REGION ?? "eu-north-1",
     apiVersion: "2006-03-01",
     signatureVersion: "v4",
 }
@@ -17,7 +17,7 @@ export function getSignedPutUrl(Key: string) {
     const signedUrlExpireSeconds = 60 * 5
 
     const url = s3().getSignedUrl("putObject", {
-        Bucket: "r-board-assets",
+        Bucket: process.env.AWS_ASSETS_BUCKET_NAME ?? "r-board-assets",
         Key,
         Expires: signedUrlExpireSeconds,
     })
